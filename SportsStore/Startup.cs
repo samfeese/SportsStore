@@ -26,6 +26,8 @@ namespace SportsStore
            
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
 
         }
 
@@ -41,6 +43,7 @@ namespace SportsStore
             app.UseStatusCodePages();
 
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
@@ -64,7 +67,7 @@ namespace SportsStore
                     template: "",
                     defaults: new { controller = "Product", action = "List", productPage = 1 });
 
-                routes.MapRoute(name: null, template: "{controller}/{action}/{id}");
+                routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
 
             });
 
